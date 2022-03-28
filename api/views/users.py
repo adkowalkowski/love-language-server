@@ -59,3 +59,17 @@ class SignOut(generics.DestroyAPIView):
         # Logout will remove all session data
         logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ChangePassword(generics.UpdateAPIView):
+    def patch(self, request):
+        user = request.user
+        old_pw = request.data['passwords']['old']
+        new_pw = request.data['passwords']['new']
+        # check_password is included with the Django base user model
+        if not user.check_password(old_pw):
+            return Response({ 'msg': 'Wrong password' }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        # set_password will also hash the password
+        user.set_password(new_pw)
+        user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
