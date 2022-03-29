@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 class Love(models.Model):
+    # Obtaining the user from the user model
     user = models.ForeignKey(
         get_user_model(),
         on_delete = models.CASCADE
     )
     
+    # Defining the dropdown choices 
     class LoveLanguages(models.TextChoices):
         ACTS_OF_SERVICE = 'Acts of Service'
         RECEIVING_GIFTS = 'Receiving Gifts'
