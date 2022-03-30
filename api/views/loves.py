@@ -11,7 +11,7 @@ class LovesView(APIView):
         loves = Love.objects.filter(user=request.user.id)
         data = LoveSerializer(loves, many=True).data
         return Response(data)
-
+    
     def post(self, request):
         request.data['user'] = request.user.id
         love = LoveSerializer(data=request.data)
