@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from ..serializers.love import LoveSerializer 
 from ..models.love import Love
+from django.contrib.auth import authenticate
 
 class LovesView(APIView):
     def get(self, request):
@@ -22,22 +23,25 @@ class LovesView(APIView):
             return Response(love.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoveView(APIView):
-    def get(self, request, pk):
-        love = get_object_or_404(Love, pk=pk)
-        # if request.user != love.user:
-        #     raise PermissionDenied('Unauthorized, you are not signed in as this user')
-        # else:
+    # I do not want authorization for the get request, but I do for the delete and put. These
+    # are fine here, because the delete and put requests have conditionals 
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get(self, request, variable_email): 
+        love = get_object_or_404(Love, user__email=variable_email)
         data = LoveSerializer(love).data
         return Response(data)
-    def delete(self, request, pk):
-        love = get_object_or_404(Love, pk=pk)
+
+    def delete(self, request, variable_email):
+        love = get_object_or_404(Love, user__email=variable_email)
         if request.user != love.user:
             raise PermissionDenied('Unauthorized, you are not signed in as this user')
         else:
             love.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-    def put(self, request, pk):
-        love = get_object_or_404(Love, pk=pk)
+    def put(self, request, variable_email):
+        love = get_object_or_404(Love, user__email=variable_email)
         if request.user != love.owner:
             raise PermissionDenied('Unauthorized, you are not signed in as this user')
         else:
