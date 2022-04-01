@@ -33,15 +33,16 @@ class LoveView(APIView):
         data = LoveSerializer(love).data
         return Response([data])
 
-    def delete(self, request, email):
-        love = get_object_or_404(Love, user__email=email)
+    def delete(self, request, pk):
+        love = get_object_or_404(Love, pk=pk)
         if request.user != love.user:
             raise PermissionDenied('Unauthorized, you are not signed in as this user')
         else:
             love.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-    def put(self, request, email):
-        love = get_object_or_404(Love, user__email=email)
+
+    def put(self, request, pk):
+        love = get_object_or_404(Love, pk=pk)
         if request.user != love.owner:
             raise PermissionDenied('Unauthorized, you are not signed in as this user')
         else:
