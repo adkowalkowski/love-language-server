@@ -28,20 +28,20 @@ class LoveView(APIView):
     authentication_classes = ()
     permission_classes = ()
 
-    def get(self, request, variable_email): 
-        love = get_object_or_404(Love, user__email=variable_email)
+    def get(self, request, email): 
+        love = get_object_or_404(Love, user__email=email)
         data = LoveSerializer(love).data
-        return Response(data)
+        return Response([data])
 
-    def delete(self, request, variable_email):
-        love = get_object_or_404(Love, user__email=variable_email)
+    def delete(self, request, email):
+        love = get_object_or_404(Love, user__email=email)
         if request.user != love.user:
             raise PermissionDenied('Unauthorized, you are not signed in as this user')
         else:
             love.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-    def put(self, request, variable_email):
-        love = get_object_or_404(Love, user__email=variable_email)
+    def put(self, request, email):
+        love = get_object_or_404(Love, user__email=email)
         if request.user != love.owner:
             raise PermissionDenied('Unauthorized, you are not signed in as this user')
         else:
