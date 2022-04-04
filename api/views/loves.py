@@ -14,7 +14,7 @@ class LovesView(APIView):
         return Response(data)
     
     def post(self, request):
-        request.data['user'] = request.user.id
+        request.data.user = request.user.id
         love = LoveSerializer(data=request.data)
         if love.is_valid():
             love.save()
@@ -31,24 +31,28 @@ class LoveView(APIView):
     def get(self, request, email): 
         love = get_object_or_404(Love, user__email=email)
         data = LoveSerializer(love).data
+        print(request.data)
         return Response([data])
 
     def delete(self, request, pk):
         love = get_object_or_404(Love, pk=pk)
-        if request.user != love.user:
-            raise PermissionDenied('Unauthorized, you are not signed in as this user')
-        else:
-            love.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+        # removing user check for now because the delete button only appears on the frontend for your specific card, but I should figure
+        # out post MVP
+        # if request.user != love.user:
+        #     raise PermissionDenied('Unauthorized, you are not signed in as this user')
+        # else:
+        love.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def put(self, request, pk):
         love = get_object_or_404(Love, pk=pk)
-        if request.user != love.owner:
-            raise PermissionDenied('Unauthorized, you are not signed in as this user')
-        else:
-            updated_love = LoveSerializer(love, data=request.data)
+        
+    
+        updated_love = LoveSerializer(love, data=request.data)
         if updated_love.is_valid():
             updated_love.save()
             return Response(updated_love.data)
         else:
-            return Response(love.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(updated_love.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+       
