@@ -19,7 +19,7 @@ class Love(models.Model):
     five = models.CharField(max_length=20, choices=LoveLanguages.choices)    
 
     # Obtaining the user from the user model
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         get_user_model(),
         on_delete = models.CASCADE
     )

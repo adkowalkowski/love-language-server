@@ -9,3 +9,11 @@ class LoveSerializer(serializers.ModelSerializer):
         model = Love
         fields = ('id', 'one', 'two', 'three', 'four', 'five', 'user')
 
+
+class LoveCreateSerializer(serializers.ModelSerializer):
+    # user = UserSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Love
+        fields = ('id', 'user', 'one', 'two', 'three', 'four', 'five')
+

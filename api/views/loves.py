@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from ..serializers.love import LoveSerializer 
+from ..serializers.love import LoveCreateSerializer
 from ..models.love import Love
 from django.contrib.auth import authenticate
 
@@ -14,8 +15,10 @@ class LovesView(APIView):
         return Response(data)
     
     def post(self, request):
-        request.data.user = request.user.id
-        love = LoveSerializer(data=request.data)
+        request.data['user'] = request.user.id
+        print(request.data)
+        love = LoveCreateSerializer(data=request.data)
+        # if model.objects.count() > 0 
         if love.is_valid():
             love.save()
             return Response(love.data, status=status.HTTP_201_CREATED)
