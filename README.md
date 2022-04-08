@@ -3,6 +3,9 @@
 ## Frontend Repository
 This repository is for the backend, visit the [frontend repository](https://github.com/adkowalkowski/love-language-client)
 
+## Deployed Link
+[Visit the Love Language Directory](https://adkowalkowski.github.io/love-language-client/)
+
 ## Project Schedule
 
 | Day   | Deliverable                          | Status     |
