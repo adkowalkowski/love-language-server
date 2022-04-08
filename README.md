@@ -1,5 +1,8 @@
 # Project Overview
 
+## Front-end Repository
+This repository is for the back-end, visit the [front-end repository](https://github.com/adkowalkowski/love-language-client)
+
 ## Project Schedule
 
 | Day   | Deliverable                          | Status     |
