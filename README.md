@@ -1,7 +1,7 @@
 # Project Overview
 
-## Frontend Repository
-This repository is for the backend, visit the [frontend repository](https://github.com/adkowalkowski/love-language-client)
+## Backend Repository
+This repository is for the frontend, visit the [backend repository](https://github.com/adkowalkowski/love-language-server)
 
 ## Deployed Link
 Visit the [Love Language Directory](https://adkowalkowski.github.io/love-language-client/)
@@ -54,6 +54,7 @@ The user of this app values how love languages can impact relationships (both fr
 #### Future Directions
 
 - Implement changePassword feature on the frontend (currently working as intended on the backend)
+- Error handling so each selection on the dropdown has to be unique
 - Social network system (add friends so you can see their love languages without searching)
 
 ## Models
@@ -141,8 +142,9 @@ class Love(models.Model):
 | Task            | Priority | Estimated Time | Actual Time |
 | -------------------- | :------: | :------------: | :---------: |
 | Change password feature on frontend              |    H    |      2       |           |
+| Error handling for form submission and form editing              |    L    |      2       |           |
 | Social network features              |    M    |      40       |           |
-| Total                |    N/A     |      42      |           |
+| Total                |    N/A     |      44      |           |
 
 ## Additional Libraries
 - React Bootstrap
