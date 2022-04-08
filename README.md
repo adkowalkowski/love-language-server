@@ -6,24 +6,25 @@ This repository is for the backend, visit the [frontend repository](https://gith
 ## Deployed Link
 Visit the [Love Language Directory](https://adkowalkowski.github.io/love-language-client/)
 
+
 ## Project Schedule
 
 | Day   | Deliverable                          | Status     |
 | ----- | ------------------------------------ | ---------- |
 | Day 1 | Planning and Approval                | Complete |
-| Day 2 | Set up backend files and structure, test and deploy backend | Complete |
+| Day 2 | Set up backend files and structure, test and deploy backend | Incomplete |
 | Day 3 | Set up frontend files, connect frontend with backend, begin MVP attainment | Complete |
 | Day 4 | Attain MVP, debug MVP, begin styling | Complete |
 | Day 5 | Finalize CSS Styling and Responsive Design, begin postMVP if MVP attained | Complete |
 | Day 6 | Confirm finalized MVP & Bug Fixes | Complete |
-| Day 7 | Final Touches and deploying frontend | Incomplete |
+| Day 7 | Final Touches and deploying frontend | Complete |
 | Day 8 | Presentation | Complete |
 
-## Project Description
+## Project Description & Technologies
 
 Love language Directory is an app that allows users to create an account, and then add their top 5 love languages. Users can also search for other users and view their top 5 love languages. 
 
-This app will include a backend database using SQL and Django and a frontend web application using React.js.
+This app will include a backend database using PostgreSQL and Django and a frontend web application using React.js.
 
 ## User Stories
 
@@ -31,14 +32,12 @@ Taken from the official [5 love languages website](https://www.5lovelanguages.co
 
 The user of this app values how love languages can impact relationships (both friendship and romantic). However, it is very hard to keep track of your social network's love languages; it's even hard to remember your own love languages! Users of this application look for a centralized place where they can easily access their top 5 love languages as well as their social network's love languages.  
 
-## Wireframes
+## Wireframes 
 
 - [Mobile & Desktop](https://imgur.com/a/BzuPnNO)
-
-## React Architecture
 - [React Architecture](https://imgur.com/a/yGqyY6x) 
 
-### MVP/PostMVP
+## Minimum Viable Product (MVP) and Future Directions
 
 #### MVP
 
@@ -52,15 +51,16 @@ The user of this app values how love languages can impact relationships (both fr
 - Use React bootstrap for design
 - Fully Deployed frontend and backend
 
-#### PostMVP
+#### Future Directions
 
+- Implement changePassword feature on the frontend (currently working as intended on the backend)
 - Social network system (add friends so you can see their love languages without searching)
 
 ## Models
 
+Brainstorming examples: 
 ```py
 
-# Example from lecture
 class User(AbstractBaseUser, PermissionsMixin):
     
     email = models.EmailField(max_length=255, unique=True)
@@ -81,12 +81,12 @@ class Love(models.Model):
     three: models.CharField(max_length=100)
     four: models.CharField(max_length=100)
     five: models.CharField(max_length=100)
-    owner = models.ForeignKey(
+    user = models.ForeignKey(
         get_user_model(),
         on_delete = models.CASCADE
     )
 
-    dunder method 
+    # dunder method 
 ```
 
 ## Routing Table
@@ -97,8 +97,8 @@ class Love(models.Model):
 | /sign-in | POST | User sign in |
 | /sign-out | DELETE | User sign out |
 | /change-password | PATCH | User change password |
-| /love-languages | POST | Add 5 love languages to user's account |
-| /love-languages | GET | View 5 love languages of user's account |
+| /love-languages | POST | Add 5 love languages to signed-in user's account |
+| /love-languages | GET | View 5 love languages of signed-in user |
 | /love-languages/<str:email> | GET | View 5 love languages of any user |
 | /love-languages/modify/<int:pk> | DELETE | Delete 5 love languages of signed-in user |
 | /love-languages/modify/<int:pk> | PUT | Update 5 love languages of signed-in user |
@@ -133,24 +133,25 @@ class Love(models.Model):
 | Search by user on front-end    |    H     |      5       |     10      |
 | Responsive Design                  |    H     |      4       |     5      |
 | CSS and Bootstrap                  |    H     |      4       |     4      |
-| Deploy frontend                    |    H     |      1       |           |
+| Deploy frontend                    |    H     |      1       |     0.5      |
 | Total                              |    N/A     | 49 |           |
 
-#### PostMVP (all in hrs unless otherwise stated)
+#### Future Directions (all in hrs unless otherwise stated)
 
 | Task            | Priority | Estimated Time | Actual Time |
 | -------------------- | :------: | :------------: | :---------: |
+| Change password feature on frontend              |    H    |      2       |           |
 | Social network features              |    M    |      40       |           |
-| Total                |    N/A     |      40      |           |
+| Total                |    N/A     |      42      |           |
 
 ## Additional Libraries
-React Bootstrap
-Formik (not currently in use, need to debug)
-Axios
+- React Bootstrap
+- Axios
+- Formik (not currently in used, need to debug)
 
 
 ## Code Snippet
-I have a fair amount of conditional rendering and I'm happy with how it turned out -- one example is on sign in. There is conditional rendering on the profile page: if a user is not signed in, it renders the sign in page. Once a user signs in, the sign in function reloads the page and the profile page will render.
+There is conditional rendering on the profile page: if a user is not signed in, it renders the sign in page. Once a user signs in, the sign in function reloads the page and the profile page will render.
 
 Sign in handler
 ```js
@@ -296,7 +297,7 @@ And the conditional rendering on the profile page:
 ```
 
 ## Issues and Resolutions
-My project has users add their top 5 love languages via a form. Since there are limited options and my model requires them to be entered verbatim, I'm going to use a select/dropdown form. Originally I had one state to store each of these values, but I couldn't get the selected dropdown data to update the state
+My project has users add their top 5 love languages via a form. Since there are limited options and my model requires them to be entered verbatim, I decided to use a select/dropdown form. Originally I had one state to store each of these values, but I couldn't get the selected dropdown data to update the state
 ```js
 const AddTopFive = () => {
 
@@ -394,7 +395,7 @@ const AddTopFive = () => {
 
 export default AddTopFive;
 ```
-I messed around trying to push into an array, but couldn't get that to work. I came up with a verbose workaround where I have five separate states and five separate handleSelect methods. It's still working as intended and that's a win.
+I messed around trying to push into an array, but couldn't get that to work. I came up with a verbose workaround where I have five separate states and five separate handleSelect methods. 
 ```js
 const [one, setOne] = useState("");
   const [two, setTwo] = useState("");
